@@ -1,0 +1,9 @@
+{
+  "prompt_strategy": "baseline",
+  "top_k": 1,
+  "queries": 100,
+  "metrics": {
+    "exact_match": 46.0,
+    "f1": 49.38208983998457
+  }
+}

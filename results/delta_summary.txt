@@ -1,0 +1,2 @@
+Naive EM=41.50 vs Enhanced EM=33.66 (Δ=-7.84, -18.9% change).
+Naive F1=49.27 vs Enhanced F1=42.41 (Δ=-6.86, -13.9% change).

@@ -1,0 +1,12 @@
+# Overrides for enhanced pipeline experiments
+
+retrieval:
+  base_top_k: 10
+  rerank_top_k: 3
+
+llm:
+  generation_model: "google/flan-t5-base"
+
+enhancements:
+  rewrite_strategy: "recall"
+  reranker_model: "cross-encoder/ms-marco-MiniLM-L-6-v2"

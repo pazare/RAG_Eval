@@ -1,0 +1,3 @@
+System,Samples,context_precision,context_recall,faithfulness,answer_relevancy
+Naive (Top-1),100,0.6899999999309999,0.56,0.6758333333333333,0.6406915477745632
+Enhanced (Rewrite+Rerank),100,0.8658333332667918,0.62,0.785,0.6716797541428267
