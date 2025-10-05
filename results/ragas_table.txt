@@ -1,0 +1,4 @@
+| System                    |   Samples |   context_precision |   context_recall |   faithfulness |   answer_relevancy |
+|:--------------------------|----------:|--------------------:|-----------------:|---------------:|-------------------:|
+| Naive (Top-1)             |       100 |            0.69     |             0.56 |       0.675833 |           0.640692 |
+| Enhanced (Rewrite+Rerank) |       100 |            0.865833 |             0.62 |       0.785    |           0.67168  |

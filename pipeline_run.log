@@ -1,0 +1,228 @@
+================================================================================
+ASSIGNMENT 2 - MODULAR RAG PIPELINE
+================================================================================
+
+Executing Steps 1-6 (9 experiments + RAGAs):
+  • Baseline prompt, top-1
+  • Verification prompt, top-1
+  • MiniLM-L6 at top-3/5/10
+  • MiniLM-L3 at top-3/5/10
+  • Enhanced (rewrite+rerank)
+  • RAGAs (naive vs enhanced, n=25)
+
+Results saved with 'modular_' prefix in results/
+================================================================================
+
+Batches:   0%|          | 0/50 [00:00<?, ?it/s]Batches:   2%|▏         | 1/50 [00:00<00:30,  1.59it/s]Batches:   4%|▍         | 2/50 [00:00<00:22,  2.10it/s]Batches:   6%|▌         | 3/50 [00:01<00:19,  2.35it/s]Batches:   8%|▊         | 4/50 [00:01<00:18,  2.49it/s]Batches:  10%|█         | 5/50 [00:02<00:16,  2.72it/s]Batches:  12%|█▏        | 6/50 [00:02<00:15,  2.76it/s]Batches:  14%|█▍        | 7/50 [00:02<00:15,  2.79it/s]Batches:  16%|█▌        | 8/50 [00:03<00:19,  2.15it/s]Batches:  18%|█▊        | 9/50 [00:03<00:16,  2.46it/s]Batches:  20%|██        | 10/50 [00:03<00:14,  2.76it/s]Batches:  22%|██▏       | 11/50 [00:04<00:12,  3.01it/s]Batches:  24%|██▍       | 12/50 [00:04<00:11,  3.29it/s]Batches:  26%|██▌       | 13/50 [00:04<00:10,  3.63it/s]Batches:  28%|██▊       | 14/50 [00:04<00:09,  3.61it/s]Batches:  30%|███       | 15/50 [00:05<00:08,  3.96it/s]Batches:  32%|███▏      | 16/50 [00:05<00:09,  3.54it/s]Batches:  34%|███▍      | 17/50 [00:05<00:09,  3.65it/s]Batches:  36%|███▌      | 18/50 [00:05<00:07,  4.13it/s]Batches:  38%|███▊      | 19/50 [00:06<00:07,  4.31it/s]Batches:  40%|████      | 20/50 [00:06<00:06,  4.71it/s]Batches:  42%|████▏     | 21/50 [00:06<00:05,  5.15it/s]Batches:  44%|████▍     | 22/50 [00:06<00:05,  5.28it/s]Batches:  46%|████▌     | 23/50 [00:06<00:04,  5.71it/s]Batches:  48%|████▊     | 24/50 [00:06<00:04,  6.12it/s]Batches:  50%|█████     | 25/50 [00:07<00:04,  6.25it/s]Batches:  52%|█████▏    | 26/50 [00:07<00:03,  6.68it/s]Batches:  54%|█████▍    | 27/50 [00:07<00:03,  7.12it/s]Batches:  56%|█████▌    | 28/50 [00:07<00:03,  7.33it/s]Batches:  58%|█████▊    | 29/50 [00:07<00:02,  7.67it/s]Batches:  60%|██████    | 30/50 [00:07<00:02,  7.99it/s]Batches:  62%|██████▏   | 31/50 [00:07<00:02,  8.35it/s]Batches:  66%|██████▌   | 33/50 [00:07<00:01,  9.18it/s]Batches:  70%|███████   | 35/50 [00:08<00:01,  9.86it/s]Batches:  74%|███████▍  | 37/50 [00:08<00:01, 11.33it/s]Batches:  78%|███████▊  | 39/50 [00:08<00:00, 11.72it/s]Batches:  82%|████████▏ | 41/50 [00:08<00:00, 11.91it/s]Batches:  86%|████████▌ | 43/50 [00:08<00:00, 13.47it/s]Batches:  90%|█████████ | 45/50 [00:08<00:00, 13.65it/s]Batches:  94%|█████████▍| 47/50 [00:08<00:00, 13.82it/s]Batches:  98%|█████████▊| 49/50 [00:09<00:00, 13.68it/s]Batches: 100%|██████████| 50/50 [00:09<00:00,  5.42it/s]
+Prompt='Follow these steps to an...' | top-1:   0%|          | 0/100 [00:00<?, ?it/s]2025-10-04 17:39:14,087 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.084947', 'RPC error': '2025-10-04 17:39:14.087637'}> (decorators.py:140)
+2025-10-04 17:39:14,087 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,089 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.088744', 'RPC error': '2025-10-04 17:39:14.089195'}> (decorators.py:140)
+2025-10-04 17:39:14,089 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,089 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.089282', 'RPC error': '2025-10-04 17:39:14.089620'}> (decorators.py:140)
+2025-10-04 17:39:14,089 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,089 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.089684', 'RPC error': '2025-10-04 17:39:14.089926'}> (decorators.py:140)
+2025-10-04 17:39:14,089 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,090 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.089977', 'RPC error': '2025-10-04 17:39:14.090356'}> (decorators.py:140)
+2025-10-04 17:39:14,090 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,090 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.090458', 'RPC error': '2025-10-04 17:39:14.090851'}> (decorators.py:140)
+2025-10-04 17:39:14,090 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,091 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.090922', 'RPC error': '2025-10-04 17:39:14.091222'}> (decorators.py:140)
+2025-10-04 17:39:14,091 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,092 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.091274', 'RPC error': '2025-10-04 17:39:14.092028'}> (decorators.py:140)
+2025-10-04 17:39:14,092 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,092 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.092092', 'RPC error': '2025-10-04 17:39:14.092464'}> (decorators.py:140)
+2025-10-04 17:39:14,092 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,092 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.092513', 'RPC error': '2025-10-04 17:39:14.092827'}> (decorators.py:140)
+2025-10-04 17:39:14,092 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,093 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.092922', 'RPC error': '2025-10-04 17:39:14.093241'}> (decorators.py:140)
+2025-10-04 17:39:14,093 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,093 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.093301', 'RPC error': '2025-10-04 17:39:14.093570'}> (decorators.py:140)
+2025-10-04 17:39:14,093 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,094 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.093623', 'RPC error': '2025-10-04 17:39:14.094071'}> (decorators.py:140)
+2025-10-04 17:39:14,094 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,094 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.094126', 'RPC error': '2025-10-04 17:39:14.094370'}> (decorators.py:140)
+2025-10-04 17:39:14,094 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,094 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.094422', 'RPC error': '2025-10-04 17:39:14.094661'}> (decorators.py:140)
+2025-10-04 17:39:14,094 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,094 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.094709', 'RPC error': '2025-10-04 17:39:14.094933'}> (decorators.py:140)
+2025-10-04 17:39:14,094 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,095 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.094977', 'RPC error': '2025-10-04 17:39:14.095193'}> (decorators.py:140)
+2025-10-04 17:39:14,095 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,095 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.095237', 'RPC error': '2025-10-04 17:39:14.095475'}> (decorators.py:140)
+2025-10-04 17:39:14,095 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,095 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.095517', 'RPC error': '2025-10-04 17:39:14.095728'}> (decorators.py:140)
+2025-10-04 17:39:14,095 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,095 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.095772', 'RPC error': '2025-10-04 17:39:14.095980'}> (decorators.py:140)
+2025-10-04 17:39:14,096 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,096 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.096019', 'RPC error': '2025-10-04 17:39:14.096215'}> (decorators.py:140)
+2025-10-04 17:39:14,096 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,096 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.096258', 'RPC error': '2025-10-04 17:39:14.096455'}> (decorators.py:140)
+2025-10-04 17:39:14,096 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,096 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.096494', 'RPC error': '2025-10-04 17:39:14.096681'}> (decorators.py:140)
+2025-10-04 17:39:14,096 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,097 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.096721', 'RPC error': '2025-10-04 17:39:14.097026'}> (decorators.py:140)
+2025-10-04 17:39:14,097 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,097 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.097069', 'RPC error': '2025-10-04 17:39:14.097277'}> (decorators.py:140)
+2025-10-04 17:39:14,097 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,097 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.097319', 'RPC error': '2025-10-04 17:39:14.097517'}> (decorators.py:140)
+2025-10-04 17:39:14,097 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,097 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.097562', 'RPC error': '2025-10-04 17:39:14.097756'}> (decorators.py:140)
+2025-10-04 17:39:14,097 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,097 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.097797', 'RPC error': '2025-10-04 17:39:14.097987'}> (decorators.py:140)
+2025-10-04 17:39:14,098 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,098 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.098026', 'RPC error': '2025-10-04 17:39:14.098229'}> (decorators.py:140)
+2025-10-04 17:39:14,098 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,098 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.098275', 'RPC error': '2025-10-04 17:39:14.098565'}> (decorators.py:140)
+2025-10-04 17:39:14,098 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,098 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.098629', 'RPC error': '2025-10-04 17:39:14.098896'}> (decorators.py:140)
+2025-10-04 17:39:14,098 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,099 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.098945', 'RPC error': '2025-10-04 17:39:14.099159'}> (decorators.py:140)
+2025-10-04 17:39:14,099 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,099 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.099201', 'RPC error': '2025-10-04 17:39:14.099407'}> (decorators.py:140)
+2025-10-04 17:39:14,099 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,099 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.099446', 'RPC error': '2025-10-04 17:39:14.099637'}> (decorators.py:140)
+2025-10-04 17:39:14,099 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,099 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.099682', 'RPC error': '2025-10-04 17:39:14.099875'}> (decorators.py:140)
+2025-10-04 17:39:14,099 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,100 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.099913', 'RPC error': '2025-10-04 17:39:14.100103'}> (decorators.py:140)
+2025-10-04 17:39:14,100 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,100 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.100147', 'RPC error': '2025-10-04 17:39:14.100334'}> (decorators.py:140)
+2025-10-04 17:39:14,100 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,100 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.100373', 'RPC error': '2025-10-04 17:39:14.100569'}> (decorators.py:140)
+2025-10-04 17:39:14,100 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,100 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.100614', 'RPC error': '2025-10-04 17:39:14.100800'}> (decorators.py:140)
+2025-10-04 17:39:14,100 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,101 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.100840', 'RPC error': '2025-10-04 17:39:14.101024'}> (decorators.py:140)
+2025-10-04 17:39:14,101 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,101 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.101067', 'RPC error': '2025-10-04 17:39:14.101395'}> (decorators.py:140)
+2025-10-04 17:39:14,101 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,101 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.101443', 'RPC error': '2025-10-04 17:39:14.101655'}> (decorators.py:140)
+2025-10-04 17:39:14,101 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,101 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.101697', 'RPC error': '2025-10-04 17:39:14.101891'}> (decorators.py:140)
+2025-10-04 17:39:14,101 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,102 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.101935', 'RPC error': '2025-10-04 17:39:14.102124'}> (decorators.py:140)
+2025-10-04 17:39:14,102 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,102 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.102164', 'RPC error': '2025-10-04 17:39:14.102346'}> (decorators.py:140)
+2025-10-04 17:39:14,102 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,102 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.102387', 'RPC error': '2025-10-04 17:39:14.102591'}> (decorators.py:140)
+2025-10-04 17:39:14,102 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,102 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.102627', 'RPC error': '2025-10-04 17:39:14.102811'}> (decorators.py:140)
+2025-10-04 17:39:14,102 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,103 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.102852', 'RPC error': '2025-10-04 17:39:14.103036'}> (decorators.py:140)
+2025-10-04 17:39:14,103 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,103 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.103073', 'RPC error': '2025-10-04 17:39:14.103252'}> (decorators.py:140)
+2025-10-04 17:39:14,103 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,103 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.103292', 'RPC error': '2025-10-04 17:39:14.103481'}> (decorators.py:140)
+2025-10-04 17:39:14,103 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,103 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.103517', 'RPC error': '2025-10-04 17:39:14.103715'}> (decorators.py:140)
+2025-10-04 17:39:14,103 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,104 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.103768', 'RPC error': '2025-10-04 17:39:14.103996'}> (decorators.py:140)
+2025-10-04 17:39:14,104 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,104 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.104042', 'RPC error': '2025-10-04 17:39:14.104267'}> (decorators.py:140)
+2025-10-04 17:39:14,104 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,104 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.104313', 'RPC error': '2025-10-04 17:39:14.104542'}> (decorators.py:140)
+2025-10-04 17:39:14,104 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,104 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.104587', 'RPC error': '2025-10-04 17:39:14.104812'}> (decorators.py:140)
+2025-10-04 17:39:14,104 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,105 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.104872', 'RPC error': '2025-10-04 17:39:14.105122'}> (decorators.py:140)
+2025-10-04 17:39:14,105 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,105 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.105172', 'RPC error': '2025-10-04 17:39:14.105391'}> (decorators.py:140)
+2025-10-04 17:39:14,105 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,105 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.105438', 'RPC error': '2025-10-04 17:39:14.105778'}> (decorators.py:140)
+2025-10-04 17:39:14,105 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,106 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.105832', 'RPC error': '2025-10-04 17:39:14.106050'}> (decorators.py:140)
+2025-10-04 17:39:14,106 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,106 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.106097', 'RPC error': '2025-10-04 17:39:14.106317'}> (decorators.py:140)
+2025-10-04 17:39:14,106 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,106 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.106362', 'RPC error': '2025-10-04 17:39:14.106577'}> (decorators.py:140)
+2025-10-04 17:39:14,106 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,106 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.106629', 'RPC error': '2025-10-04 17:39:14.106908'}> (decorators.py:140)
+2025-10-04 17:39:14,106 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,107 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.106952', 'RPC error': '2025-10-04 17:39:14.107171'}> (decorators.py:140)
+2025-10-04 17:39:14,107 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,107 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.107217', 'RPC error': '2025-10-04 17:39:14.107424'}> (decorators.py:140)
+2025-10-04 17:39:14,107 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,107 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.107469', 'RPC error': '2025-10-04 17:39:14.107671'}> (decorators.py:140)
+2025-10-04 17:39:14,107 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,107 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.107713', 'RPC error': '2025-10-04 17:39:14.107920'}> (decorators.py:140)
+2025-10-04 17:39:14,107 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,108 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.107960', 'RPC error': '2025-10-04 17:39:14.108158'}> (decorators.py:140)
+2025-10-04 17:39:14,108 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,108 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.108199', 'RPC error': '2025-10-04 17:39:14.108410'}> (decorators.py:140)
+2025-10-04 17:39:14,108 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,108 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.108451', 'RPC error': '2025-10-04 17:39:14.108657'}> (decorators.py:140)
+2025-10-04 17:39:14,108 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,109 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.108708', 'RPC error': '2025-10-04 17:39:14.108988'}> (decorators.py:140)
+2025-10-04 17:39:14,109 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,109 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.109085', 'RPC error': '2025-10-04 17:39:14.109416'}> (decorators.py:140)
+2025-10-04 17:39:14,109 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,109 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.109481', 'RPC error': '2025-10-04 17:39:14.109752'}> (decorators.py:140)
+2025-10-04 17:39:14,109 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,110 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.109806', 'RPC error': '2025-10-04 17:39:14.110044'}> (decorators.py:140)
+2025-10-04 17:39:14,110 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,110 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.110094', 'RPC error': '2025-10-04 17:39:14.110325'}> (decorators.py:140)
+2025-10-04 17:39:14,110 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,110 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.110375', 'RPC error': '2025-10-04 17:39:14.110724'}> (decorators.py:140)
+2025-10-04 17:39:14,110 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,111 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.110778', 'RPC error': '2025-10-04 17:39:14.111007'}> (decorators.py:140)
+2025-10-04 17:39:14,111 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,111 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.111059', 'RPC error': '2025-10-04 17:39:14.111291'}> (decorators.py:140)
+2025-10-04 17:39:14,111 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,111 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.111342', 'RPC error': '2025-10-04 17:39:14.111568'}> (decorators.py:140)
+2025-10-04 17:39:14,111 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,111 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.111616', 'RPC error': '2025-10-04 17:39:14.111827'}> (decorators.py:140)
+2025-10-04 17:39:14,111 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,112 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.111871', 'RPC error': '2025-10-04 17:39:14.112085'}> (decorators.py:140)
+2025-10-04 17:39:14,112 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,112 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.112127', 'RPC error': '2025-10-04 17:39:14.112334'}> (decorators.py:140)
+2025-10-04 17:39:14,112 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,112 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.112378', 'RPC error': '2025-10-04 17:39:14.112577'}> (decorators.py:140)
+2025-10-04 17:39:14,112 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,112 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.112618', 'RPC error': '2025-10-04 17:39:14.112823'}> (decorators.py:140)
+2025-10-04 17:39:14,112 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,113 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.112864', 'RPC error': '2025-10-04 17:39:14.113077'}> (decorators.py:140)
+2025-10-04 17:39:14,113 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,113 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.113130', 'RPC error': '2025-10-04 17:39:14.113359'}> (decorators.py:140)
+2025-10-04 17:39:14,113 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,113 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.113408', 'RPC error': '2025-10-04 17:39:14.113625'}> (decorators.py:140)
+2025-10-04 17:39:14,113 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,113 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.113671', 'RPC error': '2025-10-04 17:39:14.113882'}> (decorators.py:140)
+2025-10-04 17:39:14,113 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,114 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.113930', 'RPC error': '2025-10-04 17:39:14.114143'}> (decorators.py:140)
+2025-10-04 17:39:14,114 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,114 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.114187', 'RPC error': '2025-10-04 17:39:14.114393'}> (decorators.py:140)
+2025-10-04 17:39:14,114 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,114 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.114435', 'RPC error': '2025-10-04 17:39:14.114635'}> (decorators.py:140)
+2025-10-04 17:39:14,114 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,114 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.114678', 'RPC error': '2025-10-04 17:39:14.114882'}> (decorators.py:140)
+2025-10-04 17:39:14,114 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,115 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.114930', 'RPC error': '2025-10-04 17:39:14.115282'}> (decorators.py:140)
+2025-10-04 17:39:14,115 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,115 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.115336', 'RPC error': '2025-10-04 17:39:14.115565'}> (decorators.py:140)
+2025-10-04 17:39:14,115 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,115 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.115614', 'RPC error': '2025-10-04 17:39:14.115843'}> (decorators.py:140)
+2025-10-04 17:39:14,115 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,116 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.115889', 'RPC error': '2025-10-04 17:39:14.116099'}> (decorators.py:140)
+2025-10-04 17:39:14,116 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,116 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.116144', 'RPC error': '2025-10-04 17:39:14.116353'}> (decorators.py:140)
+2025-10-04 17:39:14,116 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,116 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.116396', 'RPC error': '2025-10-04 17:39:14.116605'}> (decorators.py:140)
+2025-10-04 17:39:14,116 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,116 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.116653', 'RPC error': '2025-10-04 17:39:14.116863'}> (decorators.py:140)
+2025-10-04 17:39:14,116 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,117 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.116906', 'RPC error': '2025-10-04 17:39:14.117127'}> (decorators.py:140)
+2025-10-04 17:39:14,117 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+2025-10-04 17:39:14,117 [ERROR][handler]: RPC error: [search], <MilvusException: (code=700, message=No index found in field [embedding]: index not found)>, <Time:{'RPC start': '2025-10-04 17:39:14.117174', 'RPC error': '2025-10-04 17:39:14.117377'}> (decorators.py:140)
+2025-10-04 17:39:14,117 [ERROR][search]: Failed to search collection: rag_mini (milvus_client.py:425)
+                                                                                     Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/pablozavala/Desktop/Carnegie Mellon/NLX and LLMs/assignment2-rag/src/pipeline.py", line 355, in <module>
+    pipeline.run_all()
+  File "/Users/pablozavala/Desktop/Carnegie Mellon/NLX and LLMs/assignment2-rag/src/pipeline.py", line 301, in run_all
+    naive_artifacts, naive_metrics, question_embeddings = self.run_baseline()
+                                                          ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pablozavala/Desktop/Carnegie Mellon/NLX and LLMs/assignment2-rag/src/pipeline.py", line 152, in run_baseline
+    return EvaluationArtifacts(**artifacts_dict), metrics, question_embeddings
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: EvaluationArtifacts.__init__() got an unexpected keyword argument 'answer'

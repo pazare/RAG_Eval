@@ -1,0 +1,12 @@
+{
+  "strategy": "rewrite+rerank",
+  "prompt_strategy": "baseline",
+  "base_top_k": 10,
+  "rerank_top_k": 3,
+  "rewrite_strategy": "recall",
+  "timestamp": "2025-10-04T15:41:01.963276+00:00",
+  "metrics": {
+    "exact_match": 33.66013071895425,
+    "f1": 42.40920402984454
+  }
+}

@@ -1,0 +1,15 @@
+datasets>=2.16
+evaluate>=0.4
+langchain-openai>=0.1
+matplotlib>=3.8
+numpy>=1.24
+openai>=1.2
+pandas>=2.1
+pymilvus>=2.4
+ragas>=0.1.10
+seaborn>=0.13
+sentence-transformers>=2.2
+torch>=2.1
+tqdm>=4.66
+transformers>=4.35
+PyYAML>=6.0
