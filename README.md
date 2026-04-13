@@ -1,6 +1,5 @@
-# Assignment 2 · Ground the Domain RAG
+# Ground the Domain RAG
 
-Modular RAG system for CMU's Assignment 2 (RAG Mini Wikipedia) with organized data flow and reusable source modules.
 
 ## Environment
 
