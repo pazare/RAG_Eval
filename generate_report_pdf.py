@@ -29,7 +29,7 @@ def generate_pdf(markdown_file: Path, output_pdf: Path) -> None:
             size: letter;
             margin: 1in;
             @top-right {{
-                content: "Assignment 2: Ground the Domain RAG";
+                content: "RAG Evaluation on Mini Wikipedia";
                 font-size: 9pt;
                 color: #666;
             }}
@@ -171,7 +171,7 @@ if __name__ == "__main__":
 
     # Generate evaluation_report.pdf from technical_report.md
     markdown_file = docs_dir / "technical_report.md"
-    output_pdf = output_dir / "evaluation_report.pdf"
+    output_pdf = docs_dir / "evaluation_report.pdf"
 
     if not markdown_file.exists():
         print(f"✗ Error: {markdown_file} not found")
