@@ -36,7 +36,7 @@
 
 | Component | Version |
 |-----------|---------|
-| Python | 3.11.x |
+| Python | 3.12.x |
 | PyTorch | 2.8.0 |
 | SentenceTransformers | 5.1.1 |
 | Transformers | 4.56.2 |
@@ -80,7 +80,7 @@ Exported JSON should be stored in `results/` and referenced in the final report 
 
 ## Reproducibility Checklist
 
-- Deterministic seeds set in notebook and modules.
+- Fixed random seed (42) for the RAGAS evaluation slice; FLAN-T5 generation is deterministic (greedy decoding).
 - Cached HF datasets/models after first download.
 - Milvus Lite ingestion performed via scripted helpers (`ingest_records`).
 - Full 100-sample RAGAS evaluation for comprehensive system assessment.

@@ -104,13 +104,13 @@ This log documents all AI assistance used in building this project, with full tr
 1. **Query Rewriting Strategy**
    - Input: "Design a recall-focused query rewriting prompt for ambiguous questions"
    - Output: Suggested multi-strategy approach with recall vs. precision focus, caching mechanism
-   - Usage: Implemented `QueryRewriteCache` and recall-focused rewrite prompt
+   - Usage: Implemented a module-level rewrite cache (`_rewrite_cache`) and recall-focused rewrite prompt
    - Verification: Manually reviewed 25 sample rewrites for quality
 
 2. **Cross-Encoder Reranking**
    - Input: "Integrate cross-encoder/ms-marco-MiniLM-L-6-v2 for passage reranking"
    - Output: Provided reranking function with confidence score extraction
-   - Usage: Implemented `rerank_with_cross_encoder()` with top-k selection
+   - Usage: Implemented `rerank_contexts()` with top-k selection
    - Verification: Confidence scores analyzed for distribution and correlation with relevance
 
 3. **Enhanced Pipeline Orchestration**
