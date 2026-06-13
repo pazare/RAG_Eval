@@ -61,7 +61,7 @@ def build_ragas_dataset(
 
 
 class SentenceTransformerEmbeddingsWrapper:
-    """Minimal wrapper so RAGAs can reuse a SentenceTransformer."""
+    """Minimal wrapper so RAGAS can reuse a SentenceTransformer."""
 
     def __init__(self, model: SentenceTransformer) -> None:
         self.model = model
@@ -75,9 +75,9 @@ class SentenceTransformerEmbeddingsWrapper:
 
 
 def extract_ragas_scores(result_obj) -> Dict[str, float]:
-    """Normalize RAGAs results to a flat {metric: float} mapping.
+    """Normalize RAGAS results to a flat {metric: float} mapping.
 
-    Supports recent RAGAs EvaluationResult objects (with ``.scores`` or
+    Supports recent RAGAS EvaluationResult objects (with ``.scores`` or
     ``.to_dict()``), and dict-like fallbacks. Each metric value may be a raw
     float or a small object exposing ``.score``.
     """
@@ -98,7 +98,7 @@ def extract_ragas_scores(result_obj) -> Dict[str, float]:
         try:
             mapping = dict(result_obj)  # type: ignore[arg-type]
         except Exception as exc:  # pragma: no cover - unsupported type
-            raise TypeError(f"Unsupported RAGAs result type: {type(result_obj)}") from exc
+            raise TypeError(f"Unsupported RAGAS result type: {type(result_obj)}") from exc
 
     for metric_name, metric_value in mapping.items():
         value = getattr(metric_value, "score", metric_value)

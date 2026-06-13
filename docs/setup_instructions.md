@@ -17,9 +17,11 @@ pip install -r requirements.txt
 
 - Hugging Face account or anonymous access for `rag-datasets/rag-mini-wikipedia` parquet files (automatic download on first run).
 - Optional GPU / Apple MPS support for faster FLAN-T5 inference.
-- Personal OpenAI API key (set `OPENAI_API_KEY` or store in `~/.openai_api_key`) for RAGAs evaluation using `gpt-4o-mini`.
+- Personal OpenAI API key (set `OPENAI_API_KEY` or store in `~/.openai_api_key`) for RAGAS evaluation using `gpt-4o-mini`.
 
 ## Non-notebook Execution
+
+The simplest scripted run is `python -m src.pipeline` from the repository root. For programmatic control, drive the pipeline directly:
 
 ```bash
 python - <<'PY'
@@ -35,13 +37,13 @@ This uses `config/default.yaml` and writes all artefacts to `results/`.
 ## Execution Plan
 
 1. Activate environment and update configuration (`config/default.yaml`).
-2. Run evaluations in this order over exactly 100 queries:
+2. Run evaluations in this order over the full test split (918 queries):
    - Baseline prompt, top-1.
    - Verification prompt, top-1.
    - MiniLM-L6 (384d) top-3/top-5/top-10.
-   - MiniLM-L3 (256d) top-3/top-5/top-10.
+   - MiniLM-L3 (384d) top-3/top-5/top-10.
    - Enhanced pipeline (rewrite+rerank: base top-10, rerank top-3).
-3. Run RAGAs twice (naive vs. enhanced) on the persisted results using the 100-sample evaluation set.
+3. Run RAGAS twice (naive vs. enhanced) on the persisted results using the 100-sample evaluation set.
 4. Confirm `results/` contains refreshed JSON/CSV artefacts and export the AI usage log.
 
 ## 3. Local Data Paths
@@ -49,7 +51,6 @@ This uses `config/default.yaml` and writes all artefacts to `results/`.
 - Milvus Lite databases stored in `data/` directory:
   - `data/rag_wikipedia_mini.db` (main vector database)
   - `data/rag_enhanced.db` (enhanced pipeline database)
-- Processed data artifacts stored in `data/processed/` and `data/evaluation/`
 - Results persist under `results/` (`naive_results.json`, `enhanced_results.json`, `comparison_analysis.csv`, etc.). Delete files if you need a clean run.
 - All paths configured in `config/default.yaml` for consistency across modules and notebooks.
 
@@ -67,7 +68,7 @@ This uses `config/default.yaml` and writes all artefacts to `results/`.
    - Naive RAG ingestion, baseline evaluations
    - Prompt experiments and embedding sweeps
    - Enhanced pipeline (rewrite+rerank)
-   - RAGAs evaluation
+   - RAGAS evaluation
    - Full reporting and AI usage log
 
 3. **`notebooks/system_evaluation.ipynb`** (Module smoke tests)

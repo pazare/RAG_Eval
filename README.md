@@ -1,7 +1,62 @@
-# Ground the Domain RAG
+# RAG Evaluation Lab
 
+End-to-end retrieval-augmented generation pipeline, built and evaluated on the `rag-mini-wikipedia` corpus. The project compares a naive top-1 pipeline against an enhanced pipeline with recall-oriented query rewriting and cross-encoder reranking, scoring both with deterministic SQuAD metrics over the full test split and LLM-judged RAGAS metrics on a 100-query evaluation slice.
 
-## Environment
+**Headline finding.** Reranking lifts RAGAS context precision from 69.0% to 86.6% and faithfulness from 67.6% to 78.5%, while exact match drops from 41.5 to 33.7. Grounding quality and literal string accuracy are different axes, and a system that looks worse on string overlap can be substantially better grounded. Measuring both is the point of this project.
+
+## Key Results
+
+RAGAS metrics, 100 samples, judged with GPT-4o-mini:
+
+| System | Context Precision | Context Recall | Faithfulness | Answer Relevancy |
+|---|---|---|---|---|
+| Naive, top-1 | 69.0% | 56.0% | 67.6% | 64.1% |
+| Enhanced, rewrite plus rerank | 86.6% | 62.0% | 78.5% | 67.2% |
+
+SQuAD metrics over the full 918-query test split:
+
+| System | Exact Match | F1 |
+|---|---|---|
+| Naive, top-1 | 41.5 | 49.3 |
+| Enhanced, rewrite plus rerank | 33.7 | 42.4 |
+
+Wilson 95% confidence intervals and a two-proportion z-test are reported in `docs/technical_report.md`. Over the 918-query split the enhanced pipeline's EM is significantly lower than the naive baseline (95% CIs 38.4–44.7 vs 30.7–36.8; z=3.47, p<0.001), so the enhancement measurably trades literal accuracy for grounding, while the grounding gains are large and consistent.
+
+## Why the Divergence Matters
+
+Deterministic metrics such as exact match reward surface-form overlap with a reference answer. LLM-judged metrics such as faithfulness and context precision reward grounded, semantically correct answers. The enhanced pipeline retrieves and filters better evidence, then produces more verbose answers that match references less literally. Relying on a single metric family would have led to the wrong conclusion in either direction. The full analysis, including knowledge-leakage caveats where the generator answers from pretraining rather than retrieval, is in `docs/technical_report.md`.
+
+Additional findings from the parameter sweeps:
+
+- Retrieval depth hurts a small generator. With FLAN-T5-base, EM falls from 41.5 at top-1 to 21.0 at top-5 as weakly relevant passages dilute the prompt. Reranking down to top-3 from a top-10 candidate pool recovers precision.
+- Bigger embeddings buy little here. MPNet at 768 dimensions edges MiniLM-L6 at 384 dimensions by under one F1 point at triple the encoding cost.
+- A verification-style prompt beats the baseline prompt by roughly 2 EM points at top-1.
+
+## Architecture
+
+- Corpus: `rag-datasets/rag-mini-wikipedia` from Hugging Face, roughly 3,200 passages, cleaned and profiled before indexing.
+- Vector store: Milvus Lite with an IVF_FLAT index over `all-MiniLM-L6-v2` embeddings.
+- Generator: FLAN-T5-base with swappable prompt templates.
+- Enhancements: recall-oriented query rewriting plus `cross-encoder/ms-marco-MiniLM-L-6-v2` reranking.
+- Evaluation: Hugging Face Evaluate for SQuAD EM and F1, RAGAS with GPT-4o-mini as judge, Wilson confidence intervals, and a two-proportion z-test.
+
+All experiment parameters live in `config/default.yaml` and `config/enhanced.yaml`, so runs are repeatable without editing code or notebooks.
+
+## Repository Map
+
+| Path | Purpose |
+|---|---|
+| `src/` | Modular pipeline: `naive_rag.py`, `enhanced_rag.py`, `evaluation.py`, `pipeline.py`, `utils.py`, `config.py` |
+| `notebooks/complete_analysis.ipynb` | Full end-to-end run with all experiments and visible outputs |
+| `notebooks/data_exploration.ipynb` | Corpus profiling and evaluation-slice selection |
+| `notebooks/system_evaluation.ipynb` | Smoke test of the modular `src/` pipeline |
+| `notebooks/final_analysis.ipynb` | Result visualization with confidence intervals |
+| `config/` | YAML experiment configuration |
+| `results/` | Exported metrics for every experiment, JSON and CSV |
+| `docs/technical_report.md` | Full write-up with statistics and error analysis |
+| `AI_USAGE_LOG.md` | Complete log of AI assistance used while building the project |
+
+## Quickstart
 
 ```bash
 python -m venv .venv
@@ -9,141 +64,27 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Key dependencies: PyTorch 2.8.0, SentenceTransformers 5.1.1, Transformers 4.56.2, Milvus Lite (`pymilvus` 2.6.2), OpenAI + LangChain (0.3.34) for RAGAs, Ragas 0.3.5, Evaluate 0.4.6, Datasets 4.1.1, Pandas 2.3.3 / NumPy 2.3.3 / Matplotlib / Seaborn 0.13.2.
+Set the `OPENAI_API_KEY` environment variable before running RAGAS cells. The first run downloads the corpus and models from Hugging Face, so it needs network access. Subsequent runs use the local cache.
 
-## Datasets
-
-Passages and queries load directly from Hugging Face (`hf://datasets/rag-datasets/rag-mini-wikipedia/...`). Runs require network access on first execution; subsequent uses hit local cache.
-
-**Data Organization:**
-- Raw datasets: Loaded from HuggingFace (cached locally)
-- Processed data: Stored in `data/` directory
-- Milvus databases: `data/rag_wikipedia_mini.db`, `data/rag_enhanced.db`
-- Results/metrics: Exported to `results/` directory
-
-## Configuration
-
-- Primary settings live in `config/default.yaml` (paths, models, top-k values, enhancement switches, RAGAs params).
-- `config/enhanced.yaml` provides overrides for the enhanced pipeline runs.
-- Adjust these files instead of editing notebooks for repeatable experiments.
-
-## Execution Workflow
-
-Run the following 9 generation passes on the same 100-query evaluation slice, then execute RAGAs for the two resulting datasets:
-
-1. Baseline prompt (`baseline`), top-1 retrieval.
-2. Verification prompt (`verification`), top-1 retrieval.
-3-5. MiniLM-L6 (384d) embedding with top-3, top-5, top-10.
-6-8. MiniLM-L3 (256d) embedding with top-3, top-5, top-10.
-9. Enhanced pipeline (rewrite+rerank) with base top-10, rerank top-3.
-
-After completions:
-- Run RAGAs twice (naive vs. enhanced, using the full 100-sample evaluation set) with identical contexts saved from the 100-query runs.
-- Export metrics via notebook persistence helpers (JSON/CSV under `results/`).
-
-
-## Scripted Pipeline
-
-Run the modular evaluation pipeline (minimum requirements: 9 runs + RAGAs):
+Run the full scripted evaluation, nine generation configurations plus two RAGAS scoring passes:
 
 ```bash
 python -m src.pipeline
 ```
 
-This executes Steps 1-6 per `config/default.yaml`:
-- 9 generation runs (100 queries each)
-- RAGAs evaluation (naive vs enhanced, n=100 samples)
-- Results saved with `modular_` prefix to distinguish from complete_analysis outputs
+Outputs land in `results/` with a `modular_` prefix. The two RAGAS passes additionally require `OPENAI_API_KEY`; the committed RAGAS metrics in `results/ragas_comparison.csv` and `results/ragas_comparison_delta.csv` come from a prior keyed run, so the pipeline's `modular_ragas_*.csv` files are produced only on a keyed re-run and are not committed in this snapshot. The notebook route through `complete_analysis.ipynb` produces the unprefixed results and includes every chart and intermediate inspection step.
 
-## Notebook Structure
+## Limitations
 
-### 1. `data_exploration.ipynb` (Step 1)
-- Dataset loading using modular helper functions from `src/`
-- Quality analysis and statistics
-- Length distributions and sample inspection
-- Evaluation subset selection
+- FLAN-T5-base is a small generator. Results measure pipeline design, not frontier-model capability.
+- The 100-query slice keeps RAGAS judging affordable, so confidence intervals are wide.
+- RAGAS scores depend on the judge model. GPT-4o-mini was used throughout, and scores from a different judge would shift.
+- The corpus overlaps the generator's pretraining data, so some top-1 answers succeed without retrieval. The report discusses this leakage and how to design around it.
 
-### 2. `complete_analysis.ipynb` (Steps 1-7, comprehensive)
-- Complete end-to-end implementation (original single-notebook approach)
-- Naive RAG: embedding, Milvus ingestion, FLAN-T5 generation
-- Prompt experiments and parameter sweeps
-- Enhanced RAG: query rewriting + cross-encoder reranking
-- RAGAs evaluation with confidence intervals
-- Full reporting and AI usage log
+## Provenance and AI Use
 
-### 3. `system_evaluation.ipynb`
-- Smoke-test the modular pipeline with lightweight settings
-- Validates `src/` module integration
-- Quick verification of system functionality
+This project began as graduate coursework at Carnegie Mellon and was built with documented AI assistance. `AI_USAGE_LOG.md` records every session, prompt purpose, and verification step. The headline EM/F1 and RAGAS metrics come from the committed notebook artifacts (`results/naive_results.json`, `results/enhanced_results.json`, `results/ragas_comparison.csv`), which score SQuAD metrics over the full 918-query test split. The scripted pipeline route (`results/modular_*.json`) scores EM/F1 on the 100-query RAGAS subset and so reports different point values (EM 46.0 to 37.0, F1 49.4 to 41.6) while showing the same effect: grounding improves as literal exact-match drops.
 
-### 4. `final_analysis.ipynb`
-- Results visualization and comparison
-- Loads exported metrics from `results/`
-- Statistical analysis with confidence intervals
-- Publication-ready charts
+## License
 
-## Usage Notes
-
-- Set `OPENAI_API_KEY` env var or store the key in `~/.openai_api_key` before running RAGAs cells.
-- Milvus Lite stores embeddings locally in `data/rag_wikipedia_mini.db` and `data/rag_enhanced.db`; remove files to reset ingestion.
-- **Milvus Connection**: The enhanced pipeline automatically reconnects to Milvus before running to prevent gRPC timeout issues after long operations.
-- Results persist under `results/`. Delete files if you need a clean slate before reruns.
-- All paths are configured in `config/default.yaml` for consistency across modules and notebooks.
-- Uses deterministic seeds but downloads models on-demand; ensure network access for first run.
-
-## Deliverables
-
-### Notebooks
-- `notebooks/data_exploration.ipynb` – Step 1 dataset exploration with modular imports
-- `notebooks/complete_analysis.ipynb` – Comprehensive end-to-end implementation (Steps 1-7)
-- `notebooks/system_evaluation.ipynb` – Modular pipeline smoke tests
-- `notebooks/final_analysis.ipynb` – Results visualization and statistical analysis
-
-### Source Modules
-- `src/naive_rag.py` – Core RAG pipeline functions
-- `src/enhanced_rag.py` – Query rewriting and reranking enhancements
-- `src/evaluation.py` – SQuAD metrics and RAGAs evaluation
-- `src/utils.py` – Data loading and utility functions
-- `src/config.py` – Configuration management
-- `src/pipeline.py` – Automated evaluation runner
-
-### Data & Results
-- `data/` – Milvus databases and processed artifacts
-- `results/` – JSON/CSV metrics for all experiments (see Results Organization below)
-- `config/` – YAML configuration files
-
-## Results Organization
-
-Results are organized to distinguish between two implementation approaches:
-
-### Complete Analysis Results (No Prefix)
-Generated from `notebooks/complete_analysis.ipynb` (comprehensive Steps 1-7):
-- `naive_results.json` – Baseline metrics (EM=41.50%, F1=49.27%)
-- `enhanced_results.json` – Enhanced metrics (EM=33.66%, F1=42.41%)
-- `comparison_analysis.csv` – Prompt strategies (baseline vs verification)
-- `embedding_experiments.csv` – All embedding models (MiniLM-L3/L6, MPNet)
-- `enhanced_summary.csv` – Naive vs Enhanced delta
-- `ragas_comparison.csv` – **RAGAs metrics (n=100 samples)** ← Exceeds minimum
-- `ragas_comparison_delta.csv` – RAGAs deltas
-- `*.txt` – Formatted summary tables
-
-### Modular Pipeline Results (`modular_` Prefix)
-Generated from `run_modular_pipeline.py` or `src/pipeline.py` (Steps 1-6):
-- `modular_naive_results.json` – Baseline metrics
-- `modular_enhanced_results.json` – Enhanced metrics
-- `modular_prompt_comparison.csv` – Prompt strategies
-- `modular_embedding_experiments.csv` – MiniLM-L3/L6 sweeps only
-- `modular_enhanced_summary.csv` – Naive vs Enhanced delta
-- `modular_ragas_comparison.csv` – **RAGAs metrics (n=100 samples)** ← Assignment requirement
-- `modular_ragas_delta.csv` – RAGAs deltas
-
-**Key Differences:**
-- Complete analysis: Includes all experiments with n=100 RAGAs, plus MPNet experiments
-- Modular pipeline: Focused implementation with n=100 RAGAs, only required models
-
-### Documentation
-- `docs/technical_report.md` – Phase 5 technical report
-- `docs/technical_appendix.md` – Implementation details
-- `docs/setup_instructions.md` – Environment setup guide
-
-## Next Work (post-notebook)
+MIT

@@ -1,4 +1,4 @@
-"""Utility modules for Assignment 2 RAG pipelines."""
+"""Utility modules for the RAG evaluation pipelines."""
 
 from . import enhanced_rag, evaluation, naive_rag, utils
 

@@ -43,15 +43,15 @@ class EvaluationArtifacts:
 
 
 class RAGEvaluationPipeline:
-    """Pipeline that executes the minimum required evaluation schedule for Assignment 2.
+    """Pipeline that executes the full RAG evaluation schedule.
 
-    Runs 9 generation experiments + RAGAs evaluation (Steps 1-6):
+    Runs 9 generation experiments + RAGAS evaluation (Steps 1-6):
     1. Baseline prompt, top-1 (100 queries)
     2. Verification prompt, top-1 (100 queries)
     3-5. MiniLM-L6 (384d) at top-3/5/10
-    6-8. MiniLM-L3 (256d) at top-3/5/10
+    6-8. MiniLM-L3 (384d) at top-3/5/10
     9. Enhanced pipeline (rewrite+rerank: base top-10, rerank top-3)
-    10-11. RAGAs evaluation (naive vs enhanced, n=25 samples)
+    10-11. RAGAS evaluation (naive vs enhanced, n=100 samples)
 
     Results saved with 'modular_' prefix to distinguish from complete_analysis outputs.
     """
@@ -276,7 +276,7 @@ class RAGEvaluationPipeline:
             if key_file.exists():
                 openai_key = key_file.read_text(encoding="utf-8").strip()
         if not openai_key:
-            raise RuntimeError("OPENAI_API_KEY is required for RAGAs evaluation.")
+            raise RuntimeError("OPENAI_API_KEY is required for RAGAS evaluation.")
 
         ragas_llm = ChatOpenAI(
             model=self.config.get("raga_evaluation", "openai_model", default="gpt-4o-mini"),
@@ -350,21 +350,21 @@ class RAGEvaluationPipeline:
                 self.config.get("results", "files", "embedding_sweeps", default="embedding_experiments.csv"),
             )
 
-        # RAGAs evaluation (naive vs enhanced)
+        # RAGAS evaluation (naive vs enhanced)
         self.run_ragas(naive_artifacts, enhanced_artifacts)
 
 
 if __name__ == "__main__":
     print("=" * 80)
-    print("ASSIGNMENT 2 - MODULAR RAG PIPELINE")
+    print("MODULAR RAG EVALUATION PIPELINE")
     print("=" * 80)
-    print("\nExecuting Steps 1-6 (9 experiments + RAGAs):")
+    print("\nExecuting Steps 1-6 (9 experiments + RAGAS):")
     print("  • Baseline prompt, top-1")
     print("  • Verification prompt, top-1")
     print("  • MiniLM-L6 at top-3/5/10")
     print("  • MiniLM-L3 at top-3/5/10")
     print("  • Enhanced (rewrite+rerank)")
-    print("  • RAGAs (naive vs enhanced, n=100)")
+    print("  • RAGAS (naive vs enhanced, n=100)")
     print("\nResults saved with 'modular_' prefix in results/")
     print("=" * 80)
     print()

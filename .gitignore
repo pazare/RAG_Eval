@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.log
+*.lock
+.venv/
+data/*.db
