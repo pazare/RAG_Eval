@@ -250,7 +250,7 @@ class RAGEvaluationPipeline:
         return EvaluationArtifacts(**artifacts_dict), metrics
 
     def run_ragas(self, naive: EvaluationArtifacts, enhanced: EvaluationArtifacts) -> None:
-        sample_size = self.config.get("raga_evaluation", "sample_size", default=25)
+        sample_size = self.config.get("raga_evaluation", "sample_size", default=100)
         naive_dataset = build_ragas_dataset(
             {
                 "question": naive.questions,
