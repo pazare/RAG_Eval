@@ -1,10 +1,30 @@
 # RAG Evaluation Lab
 
+## Results at a Glance
+
+| Metric | Naive, top-1 | Enhanced, rewrite plus rerank |
+|---|---|---|
+| Context precision (RAGAS, n=100) | 69.0% (95% CI 59.4–77.2%) | 86.6% (95% CI 78.5–91.9%) |
+| Faithfulness (RAGAS, n=100) | 67.6% (95% CI 57.9–76.0%) | 78.5% (95% CI 69.5–85.4%) |
+| Exact match (SQuAD, n=918) | 41.5 (95% CI 38.4–44.7) | 33.7 (95% CI 30.7–36.8) |
+
+Wilson 95% confidence intervals, as documented in `docs/technical_report.md`. The RAGAS rows are judged with GPT-4o-mini on a 100-query slice; exact match is scored over the full 918-query test split, where the drop is statistically significant (two-proportion z-test, z=3.47, p<0.001).
+
+Reranking buys large grounding gains (context precision, faithfulness) at a measured cost in exact-match overlap. That tradeoff is the finding: grounding quality and literal string accuracy are different axes, and optimizing one silently moves the other. A system that looks worse on string overlap can be substantially better grounded, which is why this project measures both metric families instead of trusting either alone.
+
+Run the full evaluation with one command:
+
+```bash
+OPENAI_API_KEY=sk-... python -m src.pipeline
+```
+
+Everything runs locally except the RAGAS judging; SQuAD scoring is deterministic and makes no API calls, whether over the full 918-query split in the notebook route or the 100-query subset the scripted pipeline scores (see Quickstart). OpenAI is called only in the two RAGAS passes: 100 queries per system at roughly five to seven GPT-4o-mini judge calls per query (one per retrieved context for context precision, so one naive and three enhanced, plus one for context recall, two for faithfulness, and one for answer relevancy), about 1,200 requests in total. Assuming one to two thousand tokens per call, that is roughly 1 to 2.5 million tokens, on the order of a dollar at GPT-4o-mini rates ($0.15 per million input tokens, $0.60 per million output at the time of these runs). LLM judging, not deterministic scoring, is why the RAGAS slice is capped at 100 queries.
+
+## Overview
+
 End-to-end retrieval-augmented generation pipeline, built and evaluated on the `rag-mini-wikipedia` corpus. The project compares a naive top-1 pipeline against an enhanced pipeline with recall-oriented query rewriting and cross-encoder reranking, scoring both with deterministic SQuAD metrics over the full test split and LLM-judged RAGAS metrics on a 100-query evaluation slice.
 
-**Headline finding.** Reranking lifts RAGAS context precision from 69.0% to 86.6% and faithfulness from 67.6% to 78.5%, while exact match drops from 41.5 to 33.7. Grounding quality and literal string accuracy are different axes, and a system that looks worse on string overlap can be substantially better grounded. Measuring both is the point of this project.
-
-## Key Results
+## Full Results
 
 RAGAS metrics, 100 samples, judged with GPT-4o-mini:
 
