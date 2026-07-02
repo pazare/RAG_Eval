@@ -1,6 +1,6 @@
 # RAG Evaluation Lab
 
-## Results at a Glance
+## Key Results
 
 | Metric | Naive, top-1 | Enhanced, rewrite plus rerank |
 |---|---|---|
@@ -12,13 +12,13 @@ Wilson 95% confidence intervals, as documented in `docs/technical_report.md`. Th
 
 Reranking buys large grounding gains (context precision, faithfulness) at a measured cost in exact-match overlap. That tradeoff is the finding: grounding quality and literal string accuracy are different axes, and optimizing one silently moves the other. A system that looks worse on string overlap can be substantially better grounded, which is why this project measures both metric families instead of trusting either alone.
 
-Run the full evaluation with one command:
+Run the full evaluation:
 
 ```bash
 OPENAI_API_KEY=sk-... python -m src.pipeline
 ```
 
-Everything runs locally except the RAGAS judging; SQuAD scoring is deterministic and makes no API calls, whether over the full 918-query split in the notebook route or the 100-query subset the scripted pipeline scores (see Quickstart). OpenAI is called only in the two RAGAS passes: 100 queries per system at roughly five to seven GPT-4o-mini judge calls per query (one per retrieved context for context precision, so one naive and three enhanced, plus one for context recall, two for faithfulness, and one for answer relevancy), about 1,200 requests in total. Assuming one to two thousand tokens per call, that is roughly 1 to 2.5 million tokens, on the order of a dollar at GPT-4o-mini rates ($0.15 per million input tokens, $0.60 per million output at the time of these runs). LLM judging, not deterministic scoring, is why the RAGAS slice is capped at 100 queries.
+Everything runs locally except the RAGAS judging; SQuAD scoring is deterministic and makes no API calls, whether over the full 918-query split in the notebook route or the 100-query subset the scripted pipeline scores (see Quickstart). OpenAI is called only in the two RAGAS passes: 100 queries per system at roughly five to seven GPT-4o-mini judge calls per query (one per retrieved context for context precision, so one naive and three enhanced, plus one for context recall, two for faithfulness, and one for answer relevancy), about 1,200 requests in total. Assuming one to two thousand tokens per call, that is roughly 1 to 2.5 million tokens, on the order of a dollar at GPT-4o-mini rates ($0.15 per million input tokens, $0.60 per million output at the time of these runs). The RAGAS slice is capped at 100 queries because LLM judging incurs this API cost, whereas deterministic scoring does not.
 
 ## Overview
 
@@ -42,7 +42,7 @@ SQuAD metrics over the full 918-query test split:
 
 Wilson 95% confidence intervals and a two-proportion z-test are reported in `docs/technical_report.md`. Over the 918-query split the enhanced pipeline's EM is significantly lower than the naive baseline (95% CIs 38.4–44.7 vs 30.7–36.8; z=3.47, p<0.001), so the enhancement measurably trades literal accuracy for grounding, while the grounding gains are large and consistent.
 
-## Why the Divergence Matters
+## Grounding versus Surface Overlap
 
 Deterministic metrics such as exact match reward surface-form overlap with a reference answer. LLM-judged metrics such as faithfulness and context precision reward grounded, semantically correct answers. The enhanced pipeline retrieves and filters better evidence, then produces more verbose answers that match references less literally. Relying on a single metric family would have led to the wrong conclusion in either direction. The full analysis, including knowledge-leakage caveats where the generator answers from pretraining rather than retrieval, is in `docs/technical_report.md`.
 
@@ -96,7 +96,7 @@ Outputs land in `results/` with a `modular_` prefix. The two RAGAS passes additi
 
 ## Limitations
 
-- FLAN-T5-base is a small generator. Results measure pipeline design, not frontier-model capability.
+- FLAN-T5-base is a small generator, so results measure pipeline design rather than frontier-model capability.
 - The 100-query slice keeps RAGAS judging affordable, so confidence intervals are wide.
 - RAGAS scores depend on the judge model. GPT-4o-mini was used throughout, and scores from a different judge would shift.
 - The corpus overlaps the generator's pretraining data, so some top-1 answers succeed without retrieval. The report discusses this leakage and how to design around it.
