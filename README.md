@@ -92,7 +92,7 @@ Run the full scripted evaluation, nine generation configurations plus two RAGAS 
 python -m src.pipeline
 ```
 
-Outputs land in `results/` with a `modular_` prefix. The two RAGAS passes additionally require `OPENAI_API_KEY`; the committed RAGAS metrics in `results/ragas_comparison.csv` and `results/ragas_comparison_delta.csv` come from a prior keyed run, so the pipeline's `modular_ragas_*.csv` files are produced only on a keyed re-run and are not committed in this snapshot. The notebook route through `complete_analysis.ipynb` produces the unprefixed results and includes every chart and intermediate inspection step.
+Outputs land in `results/` with a `modular_` prefix. The two RAGAS passes additionally require `OPENAI_API_KEY`; the committed RAGAS metrics in `results/ragas_comparison.csv` and `results/ragas_comparison_delta.csv` come from a prior keyed run, so the pipeline's `modular_ragas_*.csv` files are produced only on a keyed re-run and remain uncommitted in this snapshot. The notebook route through `complete_analysis.ipynb` produces the unprefixed results and includes every chart and intermediate inspection step.
 
 ## Limitations
 

@@ -64,8 +64,8 @@
 - `results/modular_prompt_comparison.csv`
 - `results/modular_embedding_experiments.csv`
 - `results/modular_enhanced_summary.csv`
-- `results/modular_ragas_comparison.csv` (produced only on a keyed pipeline re-run; not committed in this snapshot)
-- `results/modular_ragas_delta.csv` (produced only on a keyed pipeline re-run; not committed in this snapshot)
+- `results/modular_ragas_comparison.csv` (produced only on a keyed pipeline re-run; remains uncommitted in this snapshot)
+- `results/modular_ragas_delta.csv` (produced only on a keyed pipeline re-run; remains uncommitted in this snapshot)
 
 ## AI Usage Log
 
