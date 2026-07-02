@@ -19,7 +19,7 @@ pip install -r requirements.txt
 - Optional GPU / Apple MPS support for faster FLAN-T5 inference.
 - Personal OpenAI API key (set `OPENAI_API_KEY` or store in `~/.openai_api_key`) for RAGAS evaluation using `gpt-4o-mini`.
 
-## Non-notebook Execution
+## Scripted Execution
 
 The simplest scripted run is `python -m src.pipeline` from the repository root. For programmatic control, drive the pipeline directly:
 

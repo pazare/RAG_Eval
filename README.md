@@ -18,9 +18,9 @@ Run the full evaluation:
 OPENAI_API_KEY=sk-... python -m src.pipeline
 ```
 
-Everything runs locally except the RAGAS judging; SQuAD scoring is deterministic and makes no API calls, whether over the full 918-query split in the notebook route or the 100-query subset the scripted pipeline scores (see Quickstart). OpenAI is called only in the two RAGAS passes: 100 queries per system at roughly five to seven GPT-4o-mini judge calls per query (one per retrieved context for context precision, so one naive and three enhanced, plus one for context recall, two for faithfulness, and one for answer relevancy), about 1,200 requests in total. Assuming one to two thousand tokens per call, that is roughly 1 to 2.5 million tokens, on the order of a dollar at GPT-4o-mini rates ($0.15 per million input tokens, $0.60 per million output at the time of these runs). The RAGAS slice is capped at 100 queries because LLM judging incurs this API cost; deterministic scoring is free.
+Everything runs locally except the RAGAS judging; SQuAD scoring is deterministic and makes no API calls, whether over the full 918-query split in the notebook route or the 100-query subset the scripted pipeline scores (see [Quickstart](#quickstart)). OpenAI is called only in the two RAGAS passes: 100 queries per system at roughly five to seven GPT-4o-mini judge calls per query (one per retrieved context for context precision, so one naive and three enhanced, plus one for context recall, two for faithfulness, and one for answer relevancy), about 1,200 requests in total. Assuming one to two thousand tokens per call, that is roughly 1 to 2.5 million tokens, on the order of a dollar at GPT-4o-mini rates ($0.15 per million input tokens, $0.60 per million output at the time of these runs). The RAGAS slice is capped at 100 queries because LLM judging incurs this API cost, whereas deterministic scoring does not.
 
-## Overview
+## Experiment Design
 
 End-to-end retrieval-augmented generation pipeline, built and evaluated on the `rag-mini-wikipedia` corpus. The project compares a naive top-1 pipeline against an enhanced pipeline with recall-oriented query rewriting and cross-encoder reranking, scoring both with deterministic SQuAD metrics over the full test split and LLM-judged RAGAS metrics on a 100-query evaluation slice.
 
@@ -74,6 +74,8 @@ All experiment parameters live in `config/default.yaml` and `config/enhanced.yam
 | `config/` | YAML experiment configuration |
 | `results/` | Exported metrics for every experiment, JSON and CSV |
 | `docs/technical_report.md` | Full write-up with statistics and error analysis |
+| `docs/technical_appendix.md` | Environment snapshot, configuration constants, and artifact inventory |
+| `docs/setup_instructions.md` | Environment setup, data paths, and notebook execution order |
 | `AI_USAGE_LOG.md` | Complete log of AI assistance used while building the project |
 
 ## Quickstart
