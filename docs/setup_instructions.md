@@ -51,7 +51,7 @@ This uses `config/default.yaml` and writes all artefacts to `results/`.
 - Milvus Lite databases stored in `data/` directory:
   - `data/rag_wikipedia_mini.db` (main vector database)
   - `data/rag_enhanced.db` (enhanced pipeline database)
-- Results persist under `results/` (`naive_results.json`, `enhanced_results.json`, `comparison_analysis.csv`, etc.). Delete files if you need a clean run.
+- Results persist under `results/` (`naive_results.json`, `enhanced_results.json`, `comparison_analysis.csv`, etc.). Delete them for a clean run.
 - All paths configured in `config/default.yaml` for consistency across modules and notebooks.
 
 ## 4. Notebook Execution Order

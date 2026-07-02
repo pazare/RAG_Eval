@@ -76,7 +76,7 @@ record_ai_usage(tool, purpose, input_summary, output_usage, verification)
 export_ai_usage_log()
 ```
 
-Exported JSON should be stored in `results/` and referenced in the final report appendices.
+Store exported JSON in `results/` and reference it in the final report appendices.
 
 ## Reproducibility Checklist
 
